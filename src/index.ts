@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { basename } from "node:path";
-import { cwd } from "node:process";
+import { argv, cwd } from "node:process";
 import { pathToFileURL } from "node:url";
 import { transpile } from "@deno/emit";
 import { build } from "esbuild";
@@ -11,7 +11,13 @@ export interface Options {
   jsxImportSource?: string;
 }
 
-(globalThis as any).Deno = { cwd, readFile };
+(globalThis as any).Deno = {
+  cwd,
+  readFile,
+  // Error occurs when loading chalk package
+  // https://github.com/chalk/chalk/blob/4a10354857ba6d7932dad5fa6ef2e021c4ed47fb/source/vendor/supports-color/index.js#L7
+  args: argv,
+};
 
 export const precompileJsx = async ({
   code,
