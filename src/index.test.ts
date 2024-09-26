@@ -2,10 +2,11 @@ import { expect, it } from "vitest";
 import { precompileJsx } from "./index";
 
 const code = `
+import { Component } from "type"
 import { useState } from "preact/compat"
 import { useHook } from "./hooks"
 
-export default () => {
+export default (): Component => {
   useHook()
   const [count, setCount] = useState(0)
   return <div>{count}</div>;

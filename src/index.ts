@@ -1,9 +1,8 @@
 import { readFile } from "node:fs/promises";
-import { basename } from "node:path";
 import { argv, cwd } from "node:process";
 import { pathToFileURL } from "node:url";
 import { transpile } from "@deno/emit";
-import { build } from "esbuild";
+import ts from "typescript";
 
 export interface Options {
   code: string;
@@ -24,17 +23,22 @@ export const precompileJsx = async ({
   path = "index.tsx",
   jsxImportSource = "preact",
 }: Options): Promise<{ code: string; map: string }> => {
-  const outfile = basename(path);
+  const sourceFile = ts.createSourceFile(path, code, ts.ScriptTarget.Latest);
+  const moduleSet = new Set<string>();
 
-  const { metafile } = await build({
-    stdin: { contents: code, sourcefile: path, loader: path.endsWith(".jsx") ? "jsx" : "tsx" },
-    jsx: "preserve",
-    write: false,
-    metafile: true,
-    outfile,
-  });
+  for (const statement of sourceFile.statements) {
+    if (ts.isImportDeclaration(statement) && ts.isStringLiteral(statement.moduleSpecifier)) {
+      moduleSet.add(statement.moduleSpecifier.text);
+    } else if (
+      ts.isExportDeclaration(statement) &&
+      statement.moduleSpecifier &&
+      ts.isStringLiteral(statement.moduleSpecifier)
+    ) {
+      moduleSet.add(statement.moduleSpecifier.text);
+    }
+  }
 
-  const imports = Object.fromEntries(metafile.outputs[outfile].imports.map(({ path }) => [path, "/"]));
+  const imports = Object.fromEntries([...moduleSet].map((mod) => [mod, "/"]));
 
   const url = pathToFileURL(path).href;
 
