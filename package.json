@@ -1,0 +1,58 @@
+{
+  "name": "@mo36924/precompile-jsx",
+  "type": "module",
+  "version": "0.0.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "mo36924",
+  "license": "MIT",
+  "homepage": "https://github.com/mo36924/precompile-jsx#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mo36924/precompile-jsx.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mo36924/precompile-jsx/issues"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsx src/build.ts",
+    "fix": "run-s fix:*",
+    "fix:eslint": "eslint --fix .",
+    "fix:prettier": "prettier --write .",
+    "lint": "run-s lint:*",
+    "lint:eslint": "eslint .",
+    "lint:prettier": "prettier --check .",
+    "lint:typescript": "tsc --noEmit",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "esbuild": "^0.24.0"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "3.7.2",
+    "@deno/emit": "npm:@jsr/deno__emit@0.45.0",
+    "@types/node": "20.16.5",
+    "esbuild": "0.24.0",
+    "eslint": "9.11.1",
+    "npm-run-all2": "6.2.3",
+    "pkgroll": "2.5.0",
+    "prettier": "3.3.3",
+    "tsx": "4.19.1",
+    "typescript": "5.5.4",
+    "vitest": "2.1.1"
+  }
+}
