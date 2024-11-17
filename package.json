@@ -44,7 +44,7 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "3.7.2",
-    "@deno/emit": "npm:@jsr/deno__emit@0.45.0",
+    "@deno/emit": "npm:@jsr/deno__emit@0.46.0",
     "@types/node": "20.16.5",
     "eslint": "9.11.1",
     "npm-run-all2": "6.2.3",

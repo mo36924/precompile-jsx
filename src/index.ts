@@ -10,7 +10,7 @@ export interface Options {
   jsxImportSource?: string;
 }
 
-(globalThis as any).Deno = {
+(globalThis as any).Deno ??= {
   cwd,
   readFile,
   // Error occurs when loading chalk package
@@ -21,7 +21,7 @@ export interface Options {
 export const precompileJsx = async ({
   code,
   path = "index.tsx",
-  jsxImportSource = "preact",
+  jsxImportSource = "react",
 }: Options): Promise<{ code: string; map: string }> => {
   const sourceFile = ts.createSourceFile(path, code, ts.ScriptTarget.Latest);
   const moduleSet = new Set<string>();
@@ -38,9 +38,8 @@ export const precompileJsx = async ({
     }
   }
 
-  const imports = Object.fromEntries([...moduleSet].map((mod) => [mod, "/"]));
-
   const url = pathToFileURL(path).href;
+  const imports = Object.fromEntries([...moduleSet].map((mod) => [mod, "/"]));
 
   const result = await transpile(url, {
     cacheRoot: cwd(),
@@ -56,8 +55,8 @@ export const precompileJsx = async ({
       ),
   });
 
-  const _code = result.get(url)!;
-  const map = result.get(`${url}.map`)!;
-
-  return { code: _code, map };
+  return {
+    code: result.get(url)!,
+    map: result.get(`${url}.map`)!,
+  };
 };

@@ -19,7 +19,7 @@ it("precompileJsx", async () => {
   const result = await precompileJsx({ code });
 
   expect(result.code).toMatchInlineSnapshot(`
-    "import { jsxTemplate as _jsxTemplate, jsxEscape as _jsxEscape } from "preact/jsx-runtime";
+    "import { jsxTemplate as _jsxTemplate, jsxEscape as _jsxEscape } from "react/jsx-runtime";
     const $$_tpl_1 = [
       "<div>",
       "</div>"
