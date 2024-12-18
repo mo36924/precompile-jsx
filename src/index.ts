@@ -10,19 +10,19 @@ export interface Options {
   jsxImportSource?: string;
 }
 
-(globalThis as any).Deno ??= {
-  cwd,
-  readFile,
-  // Error occurs when loading chalk package
-  // https://github.com/chalk/chalk/blob/4a10354857ba6d7932dad5fa6ef2e021c4ed47fb/source/vendor/supports-color/index.js#L7
-  args: argv,
-};
-
 export const precompileJsx = async ({
   code,
   path = "index.tsx",
   jsxImportSource = "react",
 }: Options): Promise<{ code: string; map: string }> => {
+  (globalThis as any).Deno ??= {
+    cwd,
+    readFile,
+    // Error occurs when loading chalk package
+    // https://github.com/chalk/chalk/blob/4a10354857ba6d7932dad5fa6ef2e021c4ed47fb/source/vendor/supports-color/index.js#L7
+    args: argv,
+  };
+
   const sourceFile = ts.createSourceFile(path, code, ts.ScriptTarget.Latest);
   const moduleSet = new Set<string>();
 
