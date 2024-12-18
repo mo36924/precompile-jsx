@@ -40,18 +40,18 @@
     "test": "vitest"
   },
   "dependencies": {
-    "typescript": "^5.5.4"
+    "typescript": "^5.0.0"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "3.7.2",
+    "@antfu/eslint-config": "3.12.0",
     "@deno/emit": "npm:@jsr/deno__emit@0.46.0",
     "@types/node": "20.16.5",
     "eslint": "9.11.1",
-    "npm-run-all2": "6.2.3",
-    "pkgroll": "2.5.0",
-    "prettier": "3.3.3",
-    "tsx": "4.19.1",
-    "typescript": "5.5.4",
-    "vitest": "2.1.1"
+    "npm-run-all2": "7.0.2",
+    "pkgroll": "2.5.1",
+    "prettier": "3.4.2",
+    "tsx": "4.19.2",
+    "typescript": "5.7.2",
+    "vitest": "2.1.8"
   }
 }
